@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: DormRu
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dromru
+    username: postgres
+    password: 18092005
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
