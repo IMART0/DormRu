@@ -2,11 +2,16 @@ package am.martirosyan.dormru.controller;
 
 import am.martirosyan.dormru.dto.UserDto;
 import am.martirosyan.dormru.service.api.UserService;
+import jakarta.validation.Valid;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class AuthController {
@@ -28,9 +33,20 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") UserDto dto) {
+    public String register(@ModelAttribute("user") @Valid UserDto dto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            model.addAttribute("errors", errors);
+            return "register";
+        }
+
         userService.register(dto);
         return "redirect:/login";
+
+
     }
 
     @GetMapping("/")

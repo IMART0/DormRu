@@ -56,3 +56,19 @@ input {
     justify-content: space-around;
     margin-top: 30px;
 }
+
+.field-error {
+    color: #b30000;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #b30000;
+    background-color: #ffe0e0;
+    border: 1px solid #b30000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
