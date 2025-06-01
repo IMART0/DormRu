@@ -45,8 +45,6 @@ public class AuthController {
 
         userService.register(dto);
         return "redirect:/login";
-
-
     }
 
     @GetMapping("/")
