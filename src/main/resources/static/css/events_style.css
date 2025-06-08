@@ -131,3 +131,63 @@ body {
 .back-link:hover {
     background-color: #34495e;
 }
+
+.event-detail {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.event-detail h1 {
+    margin-bottom: 20px;
+}
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #323232;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toast-success {
+    background-color: #28a745;
+}
+
+.toast-error {
+    background-color: #dc3545;
+}
+
+.event-action button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.event-action button:hover {
+    background-color: #34495e;
+}
+
+.event-action button:active {
+    transform: scale(0.98);
+}
+

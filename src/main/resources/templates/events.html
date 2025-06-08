@@ -41,7 +41,8 @@
                 <p th:text="${event.description}">Описание...</p>
                 <div class="event-footer">
                     <span th:text="'Место: ' + ${event.location}">Место</span>
-                    <span th:text="'Организатор: ' + ${event.createdBy}">Организатор</span>
+                    <span th:text="'Организатор: ' + ${event.createdBy.lastName} + ' '
+                    + ${event.createdBy.firstName}">Организатор</span>
                 </div>
             </div>
         </a>

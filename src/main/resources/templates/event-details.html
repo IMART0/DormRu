@@ -17,15 +17,52 @@
     </nav>
 </header>
 
-<main class="content">
-    <h1 th:text="${event.title}">Название мероприятия</h1>
-    <p><strong>Дата:</strong> <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span></p>
-    <p><strong>Место:</strong> <span th:text="${event.location}">Место</span></p>
-    <p><strong>Организатор:</strong> <span th:text="${event.createdBy}">Организатор</span></p>
-    <p><strong>Описание:</strong></p>
-    <p th:text="${event.description}">Описание мероприятия...</p>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const toast = document.getElementById("toast");
+        if (toast) {
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000); // скрыть через 3 секунды
+        }
+    });
+</script>
 
-    <a th:href="@{/events}" class="back-link">← Назад к списку</a>
+<main class="content">
+    <div class="event-detail">
+        <div id="toast"
+             class="toast"
+             th:classappend="${alreadyRegistered} ? ' toast-error' : (registrationSuccess ? ' toast-success' : '')"
+             th:if="${alreadyRegistered or registrationSuccess}">
+            <p th:text="${alreadyRegistered ? 'Вы уже записаны на мероприятие' : 'Вы успешно записались на мероприятие'}"></p>
+        </div>
+        <h1 th:text="${event.title}">Название мероприятия</h1>
+        <p>
+            <strong>Дата:</strong>
+            <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span>
+        </p>
+        <p>
+            <strong>Место:</strong>
+            <span th:text="${event.location}">Место</span>
+        </p>
+        <p>
+            <strong>Организатор:</strong>
+            <span th:text="${event.createdBy.lastName}+' '+${event.createdBy.firstName}">Организатор</span>
+        </p>
+        <p>
+            <strong>Описание:</strong>
+        </p>
+        <p th:text="${event.description}">Описание мероприятия...</p>
+
+        <div class="event-action">
+            <form th:action="@{'/events/' + ${event.id} + '/register'}" method="post">
+                <button type="submit">Записаться на мероприятие</button>
+            </form>
+        </div>
+
+        <a th:href="@{/events}" class="back-link">← Назад к списку</a>
+    </div>
 </main>
 
 </body>

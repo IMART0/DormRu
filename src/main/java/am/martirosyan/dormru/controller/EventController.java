@@ -1,19 +1,21 @@
 package am.martirosyan.dormru.controller;
 
 import am.martirosyan.dormru.dto.EventResponse;
+import am.martirosyan.dormru.dto.UserResponse;
 import am.martirosyan.dormru.service.api.EventService;
+import am.martirosyan.dormru.service.api.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -23,6 +25,7 @@ import java.time.LocalDate;
 public class EventController {
 
     private final EventService eventService;
+    private final UserService userService;
 
     @GetMapping
     public String showEvents(
@@ -44,13 +47,35 @@ public class EventController {
         return "events";
     }
 
-
     @GetMapping("/{id}")
-    public String getEventDetails(@PathVariable Long id, Model model) {
+    public String getEventDetails(
+            @PathVariable Long id,
+            Model model,
+            @RequestParam(value = "success", required = false) Boolean success,
+            @RequestParam(value = "already", required = false) Boolean already
+    ) {
         EventResponse event = eventService.getById(id);
         model.addAttribute("event", event);
-        return "event-details"; // Название шаблона
+        model.addAttribute("notRegistered", !Boolean.TRUE.equals(success) && !Boolean.TRUE.equals(already));
+        model.addAttribute("registrationSuccess", success != null && success);
+        model.addAttribute("alreadyRegistered", already != null && already);
+        return "event-details";
     }
 
-
+    @PostMapping("/{id}/register")
+    public String registerForEvent(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes
+    ) {
+        UserResponse user = userService.getUserByEmail(userDetails.getUsername());
+        boolean already = eventService.isUserAlreadyRegistered(user.getId(), id);
+        if (already) {
+            redirectAttributes.addAttribute("already", true);
+        } else {
+            eventService.registerUserForEvent(user.getId(), id);
+            redirectAttributes.addAttribute("success", true);
+        }
+        return "redirect:/events/{id}";
+    }
 }

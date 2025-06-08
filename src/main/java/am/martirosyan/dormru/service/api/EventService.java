@@ -11,4 +11,8 @@ public interface EventService {
     Page<EventResponse> searchEvents(String keyword, LocalDate date, Pageable pageable);
 
     EventResponse getById(Long id);
+
+    boolean isUserAlreadyRegistered(Long userId, Long eventId);
+
+    void registerUserForEvent(Long userId, Long eventId);
 }
