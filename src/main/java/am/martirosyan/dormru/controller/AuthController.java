@@ -1,8 +1,9 @@
 package am.martirosyan.dormru.controller;
 
-import am.martirosyan.dormru.dto.UserDto;
+import am.martirosyan.dormru.dto.UserRequest;
 import am.martirosyan.dormru.service.api.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
-
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/login")
     public String login() {
@@ -28,12 +26,12 @@ public class AuthController {
 
     @GetMapping("/register")
     public String registerForm(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new UserRequest());
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") @Valid UserDto dto, BindingResult bindingResult, Model model) {
+    public String register(@ModelAttribute("user") @Valid UserRequest dto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream()
@@ -49,6 +47,6 @@ public class AuthController {
 
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/home";
     }
 }

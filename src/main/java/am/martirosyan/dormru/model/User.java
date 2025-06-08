@@ -1,6 +1,5 @@
 package am.martirosyan.dormru.model;
 
-import am.martirosyan.dormru.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +40,9 @@ public class User implements UserDetails {
 
     @Column(name = "room_number")
     private Integer roomNumber;
+
+    @Column(name = "image")
+    private String image;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

@@ -9,6 +9,6 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class RoleDto {
+public class RoleRequest {
     private Role.RoleName name;
 }

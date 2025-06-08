@@ -1,22 +1,22 @@
 package am.martirosyan.dormru.mapper;
 
-import am.martirosyan.dormru.dto.RoleDto;
+import am.martirosyan.dormru.dto.RoleRequest;
 import am.martirosyan.dormru.model.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoleMapper implements Mapper<Role, RoleDto> {
+public class RoleMapper implements Mapper<Role, RoleRequest, RoleRequest> {
 
     @Override
-    public Role toEntity(RoleDto roleDto) {
+    public Role toEntity(RoleRequest roleRequest) {
         return Role.builder()
-                .name(roleDto.getName())
+                .name(roleRequest.getName())
                 .build();
     }
 
     @Override
-    public RoleDto toDto(Role role) {
-        return RoleDto.builder()
+    public RoleRequest toDto(Role role) {
+        return RoleRequest.builder()
                 .name(role.getName())
                 .build();
     }

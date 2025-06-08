@@ -30,7 +30,7 @@ public class SecurityConfig {
                     .loginPage("/login")
                     .usernameParameter("email")
                     .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/", true)
+                    .defaultSuccessUrl("/home", true)
                     .failureUrl("/login?error=true")
                     .permitAll()
             )

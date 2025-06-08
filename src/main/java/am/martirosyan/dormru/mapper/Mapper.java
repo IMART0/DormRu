@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.mapper;
-public interface Mapper<Entity, Dto> {
+public interface Mapper<Entity, RequestDto, ResponseDto> {
 
-    Entity toEntity(Dto dto);
+    Entity toEntity(RequestDto dto);
 
-    Dto toDto(Entity entity);
+    ResponseDto toDto(Entity entity);
 }

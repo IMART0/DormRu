@@ -1,6 +1,9 @@
 spring:
   application:
     name: DormRu
+  servlet:
+    multipart:
+      max-file-size: 2MB
   datasource:
     url: jdbc:postgresql://localhost:5432/dromru
     username: postgres

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мероприятия | Общежитие</title>
+    <link rel="stylesheet" th:href="@{/css/events_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">Общежитие</div>
+    <nav class="nav-links">
+        <a th:href="@{/profile}">Профиль</a>
+        <a th:href="@{/events}">Мероприятия</a>
+        <a th:href="@{/complaints}">Жалобы</a>
+        <a th:href="@{/logout}">Выйти</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1>Ближайшие мероприятия</h1>
+
+    <!-- Поиск и фильтр -->
+    <form method="get" class="filter-form">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Поиск по названию">
+        <input type="date" name="date" th:value="${date}">
+        <button type="submit">Найти</button>
+    </form>
+
+    <div class="event-list">
+        <div class="event-item" th:each="event : ${events}">
+            <div class="event-header">
+                <h3 th:text="${event.title}">Название мероприятия</h3>
+                <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span>
+            </div>
+            <p th:text="${event.description}">Описание...</p>
+            <div class="event-footer">
+                <span th:text="'Место: ' + ${event.location}">Место</span>
+                <span th:text="'Организатор: ' + ${event.createdBy}">Организатор</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>

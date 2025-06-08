@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class UserRequest {
 
     @NotBlank(message = "Email не может быть пустым")
     private String email;
@@ -38,5 +38,7 @@ public class UserDto {
 
     @NotNull(message = "Номер комнаты не может быть пустым")
     private Integer roomNumber;
-    private Set<RoleDto> roles;
+
+    private String image;
+    private Set<RoleRequest> roles;
 }

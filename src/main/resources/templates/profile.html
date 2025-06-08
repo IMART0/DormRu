@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль | Общежитие</title>
+    <link rel="stylesheet" th:href="@{/css/home_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/settings}">Настройки</a>
+        <a th:href="@{/events}">Мероприятия</a>
+        <a th:href="@{/complaints}">Жалобы</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1>Профиль пользователя</h1>
+    <div class="profile-card">
+        <div class="profile-left">
+            <div th:if="${error}" class="error-message" th:text="${error}"></div>
+            <img th:src="${user.image}"
+                 alt="Аватар" class="profile-image">
+
+            <!-- Форма загрузки изображения -->
+            <form th:action="@{/profile/image}" method="post" enctype="multipart/form-data" class="upload-form">
+                <label class="file-label">
+                    <input type="file" name="image" accept="image/*" class="file-input">
+                    Выбрать файл
+                </label>
+                <button type="submit" class="btn-upload">Загрузить</button>
+            </form>
+
+            <!-- Форма удаления изображения -->
+            <form th:action="@{/profile/image/delete}" method="post">
+                <button type="submit" class="btn-delete">Удалить фото</button>
+            </form>
+        </div>
+
+
+        <div class="profile-right">
+            <p><strong>ФИО:</strong> <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+            <p><strong>Возраст:</strong> <span th:text="${user.age}"></span></p>
+            <p><strong>Номер группы:</strong> <span th:text="${user.groupNumber}"></span></p>
+            <p><strong>Номер комнаты:</strong> <span th:text="${user.roomNumber}"></span></p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
