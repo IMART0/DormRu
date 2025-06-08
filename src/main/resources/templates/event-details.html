@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${event.title}">Детали мероприятия</title>
+    <link rel="stylesheet" th:href="@{/css/events_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/profile}">Профиль</a>
+        <a th:href="@{/events}">Мероприятия</a>
+        <a th:href="@{/complaints}">Жалобы</a>
+        <a th:href="@{/logout}">Выйти</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1 th:text="${event.title}">Название мероприятия</h1>
+    <p><strong>Дата:</strong> <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span></p>
+    <p><strong>Место:</strong> <span th:text="${event.location}">Место</span></p>
+    <p><strong>Организатор:</strong> <span th:text="${event.createdBy}">Организатор</span></p>
+    <p><strong>Описание:</strong></p>
+    <p th:text="${event.description}">Описание мероприятия...</p>
+
+    <a th:href="@{/events}" class="back-link">← Назад к списку</a>
+</main>
+
+</body>
+</html>

@@ -1,11 +1,14 @@
 package am.martirosyan.dormru.service.api;
 
 import am.martirosyan.dormru.dto.EventResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface EventService {
 
-    List<EventResponse> searchEvents(String keyword, LocalDate date);
+    Page<EventResponse> searchEvents(String keyword, LocalDate date, Pageable pageable);
+
+    EventResponse getById(Long id);
 }

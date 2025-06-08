@@ -8,7 +8,7 @@
 <body>
 
 <header class="navbar">
-    <div class="logo">Общежитие</div>
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
     <nav class="nav-links">
         <a th:href="@{/profile}">Профиль</a>
         <a th:href="@{/events}">Мероприятия</a>
@@ -22,24 +22,43 @@
 
     <!-- Поиск и фильтр -->
     <form method="get" class="filter-form">
-        <input type="text" name="keyword" th:value="${keyword}" placeholder="Поиск по названию">
-        <input type="date" name="date" th:value="${date}">
+        <label>
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Поиск по названию">
+        </label>
+        <label>
+            <input type="date" name="date" th:value="${date}">
+        </label>
         <button type="submit">Найти</button>
     </form>
 
     <div class="event-list">
-        <div class="event-item" th:each="event : ${events}">
-            <div class="event-header">
-                <h3 th:text="${event.title}">Название мероприятия</h3>
-                <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span>
+        <a class="event-item-link" th:href="@{'/events/' + ${event.id}}" th:each="event : ${events}">
+            <div class="event-item">
+                <div class="event-header">
+                    <h3 th:text="${event.title}">Название мероприятия</h3>
+                    <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span>
+                </div>
+                <p th:text="${event.description}">Описание...</p>
+                <div class="event-footer">
+                    <span th:text="'Место: ' + ${event.location}">Место</span>
+                    <span th:text="'Организатор: ' + ${event.createdBy}">Организатор</span>
+                </div>
             </div>
-            <p th:text="${event.description}">Описание...</p>
-            <div class="event-footer">
-                <span th:text="'Место: ' + ${event.location}">Место</span>
-                <span th:text="'Организатор: ' + ${event.createdBy}">Организатор</span>
-            </div>
+        </a>
+    </div>
+
+    <div class="pagination">
+        <div class="pages">
+        <span th:if="${totalPages > 1}">
+            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+               th:href="@{/events(page=${i}, size=3, keyword=${keyword}, date=${date})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active-page' : ''">
+            </a>
+        </span>
         </div>
     </div>
+
 </main>
 
 
