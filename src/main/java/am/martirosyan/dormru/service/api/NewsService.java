@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.service.api;
 
-import am.martirosyan.dormru.dto.NewsResponse;
+import am.martirosyan.dormru.dto.response.NewsResponse;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.mapper;
 
-import am.martirosyan.dormru.dto.EventRequest;
-import am.martirosyan.dormru.dto.EventResponse;
+import am.martirosyan.dormru.dto.request.EventRequest;
+import am.martirosyan.dormru.dto.response.EventResponse;
 import am.martirosyan.dormru.model.Event;
 import am.martirosyan.dormru.model.User;
 import lombok.RequiredArgsConstructor;

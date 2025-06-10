@@ -1,4 +1,4 @@
-package am.martirosyan.dormru.dto;
+package am.martirosyan.dormru.dto.request;
 
 import am.martirosyan.dormru.model.Role;
 import lombok.*;

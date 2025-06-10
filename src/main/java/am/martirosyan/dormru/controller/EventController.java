@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.controller;
 
-import am.martirosyan.dormru.dto.EventResponse;
-import am.martirosyan.dormru.dto.UserResponse;
+import am.martirosyan.dormru.dto.response.EventResponse;
+import am.martirosyan.dormru.dto.response.UserResponse;
 import am.martirosyan.dormru.service.api.EventService;
 import am.martirosyan.dormru.service.api.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.mapper;
 
-import am.martirosyan.dormru.dto.UserRequest;
-import am.martirosyan.dormru.dto.UserResponse;
+import am.martirosyan.dormru.dto.request.UserRequest;
+import am.martirosyan.dormru.dto.response.UserResponse;
 import am.martirosyan.dormru.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

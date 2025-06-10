@@ -1,4 +1,4 @@
-package am.martirosyan.dormru.dto;
+package am.martirosyan.dormru.dto.response;
 
 import lombok.*;
 

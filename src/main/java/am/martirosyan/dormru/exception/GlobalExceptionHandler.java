@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.exception;
 
-import am.martirosyan.dormru.dto.UserRequest;
+import am.martirosyan.dormru.dto.request.UserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public String handleMaxSizeException(MaxUploadSizeExceededException ex,
+    public String handleMaxSizeException(MaxUploadSizeExceededException ignoredEx,
                                          RedirectAttributes redirectAttributes,
                                          HttpServletRequest request) {
         redirectAttributes.addFlashAttribute("error", "Файл слишком большой!");

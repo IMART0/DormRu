@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.controller;
 
-import am.martirosyan.dormru.dto.NewsResponse;
+import am.martirosyan.dormru.dto.response.NewsResponse;
 import am.martirosyan.dormru.service.api.NewsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

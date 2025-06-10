@@ -1,4 +1,4 @@
-package am.martirosyan.dormru.dto;
+package am.martirosyan.dormru.dto.request;
 
 import lombok.*;
 
@@ -7,8 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsResponse {
-    Long id;
+public class NewsRequest {
     String title;
     String description;
     String imageUrl;

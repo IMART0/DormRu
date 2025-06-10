@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.service.impl;
 
-import am.martirosyan.dormru.dto.NewsResponse;
+import am.martirosyan.dormru.dto.response.NewsResponse;
 import am.martirosyan.dormru.exception.NewsNotFoundException;
 import am.martirosyan.dormru.mapper.NewsMapper;
 import am.martirosyan.dormru.repository.NewsRepository;

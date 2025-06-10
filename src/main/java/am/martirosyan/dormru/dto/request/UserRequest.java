@@ -1,4 +1,4 @@
-package am.martirosyan.dormru.dto;
+package am.martirosyan.dormru.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

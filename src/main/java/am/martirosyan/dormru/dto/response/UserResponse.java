@@ -1,5 +1,6 @@
-package am.martirosyan.dormru.dto;
+package am.martirosyan.dormru.dto.response;
 
+import am.martirosyan.dormru.dto.request.RoleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

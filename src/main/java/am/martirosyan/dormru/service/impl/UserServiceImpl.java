@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.service.impl;
 
-import am.martirosyan.dormru.dto.UserRequest;
-import am.martirosyan.dormru.dto.UserResponse;
+import am.martirosyan.dormru.dto.request.UserRequest;
+import am.martirosyan.dormru.dto.response.UserResponse;
 import am.martirosyan.dormru.exception.RoomNotExistException;
 import am.martirosyan.dormru.exception.UserAlreadyExistsException;
 import am.martirosyan.dormru.mapper.UserMapper;

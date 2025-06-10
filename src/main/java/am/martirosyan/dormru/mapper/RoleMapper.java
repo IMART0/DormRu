@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.mapper;
 
-import am.martirosyan.dormru.dto.RoleRequest;
+import am.martirosyan.dormru.dto.request.RoleRequest;
 import am.martirosyan.dormru.model.Role;
 import org.springframework.stereotype.Component;
 

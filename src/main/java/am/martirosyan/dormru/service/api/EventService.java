@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.service.api;
 
-import am.martirosyan.dormru.dto.EventResponse;
+import am.martirosyan.dormru.dto.response.EventResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

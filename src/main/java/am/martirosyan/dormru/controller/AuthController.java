@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.controller;
 
-import am.martirosyan.dormru.dto.UserRequest;
+import am.martirosyan.dormru.dto.request.UserRequest;
 import am.martirosyan.dormru.service.api.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

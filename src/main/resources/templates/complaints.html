@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои жалобы</title>
+    <link rel="stylesheet" th:href="@{/css/complaint_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/profile}">Профиль</a>
+        <a th:href="@{/events}">Мероприятия</a>
+        <a th:href="@{/complaints}">Жалобы</a>
+        <a th:href="@{/logout}">Выйти</a>
+    </nav>
+</header>
+
+<main class="content">
+    <div class="complaint-header">
+        <h1>Мои жалобы</h1>
+        <a class="btn-new" th:href="@{/complaints/new}">+ Новая жалоба</a>
+    </div>
+
+    <div class="complaint-list">
+        <div class="complaint-item" th:each="complaint : ${complaints}">
+            <h3 th:text="${complaint.status.toString()}">Статус</h3>
+            <p th:text="${complaint.complaintText}">Описание жалобы</p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

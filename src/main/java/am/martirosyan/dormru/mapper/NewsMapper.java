@@ -1,7 +1,7 @@
 package am.martirosyan.dormru.mapper;
 
-import am.martirosyan.dormru.dto.NewsRequest;
-import am.martirosyan.dormru.dto.NewsResponse;
+import am.martirosyan.dormru.dto.request.NewsRequest;
+import am.martirosyan.dormru.dto.response.NewsResponse;
 import am.martirosyan.dormru.model.News;
 import org.springframework.stereotype.Component;
 

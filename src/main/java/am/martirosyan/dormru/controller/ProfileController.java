@@ -1,6 +1,6 @@
 package am.martirosyan.dormru.controller;
 
-import am.martirosyan.dormru.dto.UserResponse;
+import am.martirosyan.dormru.dto.response.UserResponse;
 import am.martirosyan.dormru.service.api.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
