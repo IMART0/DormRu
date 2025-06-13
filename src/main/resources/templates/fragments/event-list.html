@@ -1,0 +1,30 @@
+<div th:fragment="eventList">
+  <div id="event-list">
+    <a class="event-item-link" th:href="@{'/events/' + ${event.id}}" th:each="event : ${events}">
+      <div class="event-item">
+        <div class="event-header">
+          <h3 th:text="${event.title}">Название мероприятия</h3>
+          <span th:text="${#temporals.format(event.eventDate, 'dd.MM.yyyy HH:mm')}">Дата</span>
+        </div>
+        <p th:text="${event.description}">Описание...</p>
+        <div class="event-footer">
+          <span th:text="'Место: ' + ${event.location}">Место</span>
+          <span th:text="'Организатор: ' + ${event.createdBy.lastName} + ' ' + ${event.createdBy.firstName}">Организатор</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div id="pagination">
+    <div class="pages">
+            <span th:if="${totalPages > 1}">
+                <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                   th:href="@{/events/filter(page=${i}, size=3, keyword=${keyword}, date=${date})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == currentPage} ? 'active-page' : ''"
+                   class="pagination-link">
+                </a>
+            </span>
+    </div>
+  </div>
+</div>

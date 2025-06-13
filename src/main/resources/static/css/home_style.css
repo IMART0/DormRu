@@ -226,3 +226,13 @@ body {
     background-color: #992d22;
 }
 
+.warning-message {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+}
+
+

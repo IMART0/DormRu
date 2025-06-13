@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,11 +20,12 @@ import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/profile")
 public class ProfileController {
 
     private final UserService userService;
 
-    @GetMapping("/profile")
+    @GetMapping
     public String profilePage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String email = userDetails.getUsername();
         UserResponse user = userService.getUserByEmail(email);
@@ -31,7 +33,7 @@ public class ProfileController {
         return "profile";
     }
 
-    @PostMapping("/profile/image")
+    @PostMapping("/image")
     public String uploadProfileImage(@AuthenticationPrincipal UserDetails userDetails,
                                      MultipartFile image) throws IOException {
         if (image != null && !image.isEmpty()) {
@@ -49,7 +51,7 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-    @PostMapping("/profile/image/delete")
+    @PostMapping("/image/delete")
     public String deleteProfileImage(@AuthenticationPrincipal UserDetails userDetails) {
         userService.updateProfileImage(userDetails.getUsername(), "/images/default-avatar.png");
         return "redirect:/profile";

@@ -71,7 +71,7 @@ CREATE TABLE complaints
     id             INTEGER PRIMARY KEY DEFAULT nextval('complaints_id_seq'),
     user_id        INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE, -- Кто отправил жалобу
     complaint_text TEXT    NOT NULL,                                         -- Текст жалобы
-    status         VARCHAR(20)         DEFAULT 'В процессе'                  -- Статус (pending, resolved)
+    status         VARCHAR(20) CHECK ( status IN ('CREATED', 'IN_PROGRESS', 'RESOLVED', 'REJECTED') )
 );
 
 INSERT INTO rooms (room_number, capacity)

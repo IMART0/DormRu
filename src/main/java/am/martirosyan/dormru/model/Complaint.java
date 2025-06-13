@@ -3,6 +3,8 @@ package am.martirosyan.dormru.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class Complaint {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private ComplaintStatus status;
+
+    @Column(name = "create_date")
+    private LocalDateTime createdDate;
 }

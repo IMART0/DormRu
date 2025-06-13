@@ -1,7 +1,9 @@
 package am.martirosyan.dormru.service.impl;
 
+import am.martirosyan.dormru.dto.request.ComplaintRequest;
 import am.martirosyan.dormru.dto.response.ComplaintResponse;
 import am.martirosyan.dormru.mapper.ComplaintMapper;
+import am.martirosyan.dormru.model.ComplaintStatus;
 import am.martirosyan.dormru.model.User;
 import am.martirosyan.dormru.repository.ComplaintRepository;
 import am.martirosyan.dormru.repository.UserRepository;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,5 +34,17 @@ public class ComplaintServiceImpl implements ComplaintService {
                 .stream()
                 .map(complaintMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public void createComplaint(String email, ComplaintRequest complaintRequest) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        var complaint = complaintMapper.toEntity(complaintRequest);
+        complaint.setUser(user);
+        complaint.setStatus(ComplaintStatus.CREATED);
+        complaint.setCreatedDate(LocalDateTime.now());
+        complaintRepository.save(complaint);
     }
 }

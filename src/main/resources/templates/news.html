@@ -1,31 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title th:text="${news.title}">Новость</title>
-  <link rel="stylesheet" th:href="@{/css/home_style.css}">
+    <meta charset="UTF-8">
+    <title th:text="${news.title}">Новость</title>
+    <link rel="stylesheet" th:href="@{/css/home_style.css}">
 </head>
+
+<script>
+    function confirmLogout(event) {
+        event.preventDefault();
+        if (confirm('Действительно выйти?')) {
+            document.getElementById('logoutForm').submit();
+        }
+    }
+</script>
+
 <body>
 
 <header class="navbar">
-  <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
-  <nav class="nav-links">
-    <a th:href="@{/profile}">Профиль</a>
-    <a th:href="@{/events}">Мероприятия</a>
-    <a th:href="@{/complaints}">Жалобы</a>
-    <a th:href="@{/logout}">Выйти</a>
-  </nav>
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Админ-панель</a>
+        <a th:href="@{/profile}">Профиль</a>
+        <a th:href="@{/events}">Мероприятия</a>
+        <a th:href="@{/complaints}">Жалобы</a>
+        <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+        <a href="#" onclick="confirmLogout(event)">Выйти</a>
+    </nav>
 </header>
 
 <main class="content">
-  <div class="news-detail">
-    <h1 th:text="${news.title}">Заголовок новости</h1>
-    <img th:src="${news.imageUrl}" alt="Изображение" class="news-detail-image">
-    <p th:text="${news.description}" class="news-description"></p>
-    <div class="news-content" th:utext="${news.description}">Текст новости...</div>
+    <div class="news-detail">
+        <h1 th:text="${news.title}">Заголовок новости</h1>
+        <img th:src="${news.imageUrl}" alt="Изображение" class="news-detail-image">
+        <p th:text="${news.description}" class="news-description"></p>
+        <div class="news-content" th:utext="${news.description}">Текст новости...</div>
 
-    <a th:href="@{/home}" class="btn">← Назад к новостям</a>
-  </div>
+        <a th:href="@{/home}" class="btn">← Назад к новостям</a>
+    </div>
 </main>
 
 </body>

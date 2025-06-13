@@ -1,0 +1,37 @@
+<div th:fragment="userTableContent" id="userTableContent">
+    <div class="user-table-container">
+        <table class="user-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Роль</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.getRoles()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <div class="pages">
+        <span th:if="${totalPages > 1}">
+            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+               th:href="@{/admin/users(page=${i}, keyword=${keyword}, role=${role})}"
+               th:text="${i + 1}"
+               class="pagination-link"
+               th:classappend="${i == currentPage} ? 'active-page' : ''">
+            </a>
+        </span>
+        </div>
+    </div>
+</div>

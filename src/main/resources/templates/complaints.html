@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Мои жалобы</title>
     <link rel="stylesheet" th:href="@{/css/complaint_style.css}">
 </head>
+
+<script>
+    function confirmLogout(event) {
+        event.preventDefault();
+        if (confirm('Действительно выйти?')) {
+            document.getElementById('logoutForm').submit();
+        }
+    }
+</script>
+
 <body>
 
 <header class="navbar">
     <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
     <nav class="nav-links">
+        <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Админ-панель</a>
         <a th:href="@{/profile}">Профиль</a>
         <a th:href="@{/events}">Мероприятия</a>
         <a th:href="@{/complaints}">Жалобы</a>
-        <a th:href="@{/logout}">Выйти</a>
+        <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+        <a href="#" onclick="confirmLogout(event)">Выйти</a>
     </nav>
 </header>
 

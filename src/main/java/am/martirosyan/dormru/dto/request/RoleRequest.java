@@ -11,4 +11,9 @@ import lombok.*;
 @Builder
 public class RoleRequest {
     private Role.RoleName name;
+
+    @Override
+    public String toString() {
+        return name.toRuString();
+    }
 }

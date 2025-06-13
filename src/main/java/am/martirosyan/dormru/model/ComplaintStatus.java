@@ -9,10 +9,10 @@ public enum ComplaintStatus {
     @Override
     public String toString() {
         return switch (this) {
-            case CREATED -> "Создан";
-            case IN_PROGRESS -> "В процессе";
-            case RESOLVED -> "Решено";
-            case REJECTED -> "Отклонено";
+            case CREATED -> "\uD83C\uDD95 Создан";
+            case IN_PROGRESS -> "⌛️ В процессе";
+            case RESOLVED -> "✅ Решено";
+            case REJECTED -> "❌ Отклонено";
         };
     }
 }

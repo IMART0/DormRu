@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
@@ -22,6 +20,15 @@ public class Role implements GrantedAuthority {
     @Enumerated(EnumType.STRING)
     private RoleName name;
 
+    public static RoleName toRoleName(String role) {
+        if (role.equals("USER")) {
+            return RoleName.ROLE_USER;
+        } else if (role.equals("ADMIN")) {
+            return RoleName.ROLE_ADMIN;
+        }
+        return RoleName.ROLE_USER;
+    }
+
 
     @Override
     public String getAuthority() {
@@ -31,5 +38,12 @@ public class Role implements GrantedAuthority {
     public enum RoleName {
         ROLE_USER,
         ROLE_ADMIN;
+
+        public String toRuString() {
+            return switch (this) {
+                case ROLE_USER -> "Пользователь";
+                case ROLE_ADMIN -> "Администратор";
+            };
+        }
     }
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ-панель | Пользователи</title>
+  <link rel="stylesheet" th:href="@{/css/admin_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+  <nav class="nav-links">
+    <a th:href="@{/admin/users}">Пользователи</a>
+    <a th:href="@{/admin/rooms}">Комнаты</a>
+    <a th:href="@{/admin/complaints}">Жалобы</a>
+    <a th:href="@{/admin/news/create}">Создать новость</a>
+    <a th:href="@{/home}">На главную</a>
+  </nav>
+</header>
+
+<main class="content">
+  <h1>Пользователи</h1>
+
+  <!-- Фильтры -->
+  <div class="filter-form">
+    <label for="keyword"></label><input type="text" id="keyword" placeholder="Поиск по email" th:value="${keyword}">
+    <label for="role"></label>
+    <select id="role">
+      <option value="">Все роли</option>
+      <option value="USER" th:selected="${role == 'USER'}">Пользователь</option>
+      <option value="ADMIN" th:selected="${role == 'ADMIN'}">Администратор</option>
+    </select>
+  </div>
+
+  <!-- Контент таблицы -->
+  <div id="userTableContent" th:replace="fragments/user-table :: userTableContent"></div>
+</main>
+
+<!-- Скрипт размещаем перед закрывающим тегом body -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const keywordInput = document.getElementById('keyword');
+    const roleSelect = document.getElementById('role');
+
+    function fetchUsers(page = 0) {
+      const keyword = keywordInput.value;
+      const role = roleSelect.value;
+
+      const params = new URLSearchParams();
+      params.append('page', page);
+      if (keyword) params.append('keyword', keyword);
+      if (role) params.append('role', role);
+
+      fetch(`/admin/users/filter?${params.toString()}`, {
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+      })
+              .then(response => response.text())
+              .then(html => {
+                const userTableContent = document.getElementById('userTableContent');
+                if (!userTableContent) {
+                  console.error("userTableContent not found in DOM");
+                  return;
+                }
+
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                const newContent = tempDiv.querySelector('#userTableContent');
+                if (!newContent) {
+                  console.error("Returned fragment does not contain #userTableContent");
+                  return;
+                }
+
+                userTableContent.innerHTML = newContent.innerHTML;
+                initPaginationLinks();
+              })
+              .catch(console.error);
+    }
+
+    function initPaginationLinks() {
+      document.querySelectorAll('.pagination-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const page = new URL(this.href).searchParams.get("page");
+          fetchUsers(page);
+        });
+      });
+    }
+
+    keywordInput.addEventListener('input', () => fetchUsers());
+    roleSelect.addEventListener('change', () => fetchUsers());
+
+    initPaginationLinks();
+  });
+</script>
+</body>
+</html>

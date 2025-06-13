@@ -29,6 +29,7 @@ public class ComplaintMapper implements Mapper<Complaint, ComplaintRequest, Comp
                 .user(userMapper.toDto(complaint.getUser()))
                 .complaintText(complaint.getComplaintText())
                 .status(complaint.getStatus())
+                .createdDate(complaint.getCreatedDate())
                 .build();
     }
 }

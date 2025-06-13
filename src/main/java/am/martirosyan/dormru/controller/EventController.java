@@ -78,4 +78,26 @@ public class EventController {
         }
         return "redirect:/events/{id}";
     }
+
+    @GetMapping("/filter")
+    public String filterEventsAjax(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("eventDate").ascending());
+        Page<EventResponse> eventPage = eventService.searchEvents(keyword, date, pageable);
+
+        model.addAttribute("events", eventPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", eventPage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("date", date);
+
+        return "fragments/event-list :: eventList";
+    }
+
+
 }

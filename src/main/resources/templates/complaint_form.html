@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Новая жалоба</title>
+  <link rel="stylesheet" th:href="@{/css/complaint_style.css}">
+</head>
+
+<script>
+  function confirmLogout(event) {
+    event.preventDefault();
+    if (confirm('Действительно выйти?')) {
+      document.getElementById('logoutForm').submit();
+    }
+  }
+</script>
+
+<body>
+
+<header class="navbar">
+  <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+  <nav class="nav-links">
+    <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Админ-панель</a>
+    <a th:href="@{/profile}">Профиль</a>
+    <a th:href="@{/events}">Мероприятия</a>
+    <a th:href="@{/complaints}" class="active">Жалобы</a>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+    <a href="#" onclick="confirmLogout(event)">Выйти</a>  </nav>
+</header>
+
+<main class="content">
+  <h1>Создать жалобу</h1>
+
+  <form th:action="@{/complaints}" method="post" class="complaint-form" th:object="${complaint}">
+    <div class="form-group">
+      <label for="complaintText">Описание жалобы</label>
+      <textarea id="complaintText" th:field="*{complaintText}" rows="6" required></textarea>
+    </div>
+
+    <!-- Можно скрыто передать статус, например: -->
+    <input type="hidden" th:field="*{status}" th:value="'OPEN'"/>
+
+    <button type="submit" class="btn-submit">Отправить</button>
+  </form>
+</main>
+
+</body>
+</html>

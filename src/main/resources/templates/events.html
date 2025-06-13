@@ -1,5 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const keywordInput = document.getElementById('keyword-input');
+        const dateInput = document.getElementById('date-input');
+
+        function fetchEvents(page = 0) {
+            const keyword = keywordInput.value;
+            const date = dateInput.value;
+
+            const params = new URLSearchParams();
+            params.append('page', page);
+            params.append('size', 3);
+            if (keyword) params.append('keyword', keyword);
+            if (date) params.append('date', date);
+
+            fetch(`/events/filter?${params.toString()}`, {
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            })
+                .then(response => response.text())
+                .then(html => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+
+                    // Обновить список
+                    const newEventList = tempDiv.querySelector('#event-list');
+                    const newPagination = tempDiv.querySelector('#pagination');
+                    document.getElementById('event-list').innerHTML = newEventList.innerHTML;
+                    document.getElementById('pagination').innerHTML = newPagination.innerHTML;
+
+                    // Назначить обработчики на новые ссылки пагинации
+                    initPaginationLinks();
+                })
+                .catch(error => console.error('Ошибка загрузки мероприятий:', error));
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault();
+            if (confirm('Действительно выйти?')) {
+                document.getElementById('logoutForm').submit();
+            }
+        }
+
+        function initPaginationLinks() {
+            document.querySelectorAll('.pagination-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const url = new URL(this.href);
+                    const page = url.searchParams.get('page');
+                    fetchEvents(page);
+                });
+            });
+        }
+
+        keywordInput.addEventListener('input', () => fetchEvents());
+        dateInput.addEventListener('change', () => fetchEvents());
+
+        initPaginationLinks();
+    });
+</script>
+
+
 <head>
     <meta charset="UTF-8">
     <title>Мероприятия | Общежитие</title>
@@ -10,10 +74,12 @@
 <header class="navbar">
     <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
     <nav class="nav-links">
+        <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Админ-панель</a>
         <a th:href="@{/profile}">Профиль</a>
         <a th:href="@{/events}">Мероприятия</a>
         <a th:href="@{/complaints}">Жалобы</a>
-        <a th:href="@{/logout}">Выйти</a>
+        <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+        <a href="#" onclick="confirmLogout(event)">Выйти</a>
     </nav>
 </header>
 
@@ -21,17 +87,16 @@
     <h1>Ближайшие мероприятия</h1>
 
     <!-- Поиск и фильтр -->
-    <form method="get" class="filter-form">
+    <form method="get" class="filter-form" id="event-filter-form">
         <label>
-            <input type="text" name="keyword" th:value="${keyword}" placeholder="Поиск по названию">
+            <input type="text" name="keyword" id="keyword-input" th:value="${keyword}" placeholder="Поиск по названию">
         </label>
         <label>
-            <input type="date" name="date" th:value="${date}">
+            <input type="date" name="date" id="date-input" th:value="${date}">
         </label>
-        <button type="submit">Найти</button>
     </form>
 
-    <div class="event-list">
+    <div class="event-list" id="event-list">
         <a class="event-item-link" th:href="@{'/events/' + ${event.id}}" th:each="event : ${events}">
             <div class="event-item">
                 <div class="event-header">
@@ -48,7 +113,7 @@
         </a>
     </div>
 
-    <div class="pagination">
+    <div class="pagination" id="pagination">
         <div class="pages">
         <span th:if="${totalPages > 1}">
             <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"

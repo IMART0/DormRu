@@ -1,1 +1,1 @@
-ALTER TABLE users ADD COLUMN image VARCHAR(255) DEFAULT '/images/default-avatar.png' NOT NULL;
+ALTER TABLE users ADD COLUMN image VARCHAR(255) DEFAULT '/images/default-avatar.png';
