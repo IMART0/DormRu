@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Жалобы</title>
+    <link rel="stylesheet" th:href="@{/css/admin_style.css}">
+</head>
+<body>
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/admin/users}">Пользователи</a>
+        <a th:href="@{/admin/rooms}">Комнаты</a>
+        <a th:href="@{/admin/complaints}">Жалобы</a>
+        <a th:href="@{/home}">На главную</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1>Список жалоб</h1>
+
+    <form method="get" class="filter-form">
+        <select name="status" onchange="this.form.submit()">
+            <option th:value="''" th:selected="${selectedStatus == null}">Все статусы</option>
+            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                    th:selected="${s == selectedStatus}"></option>
+        </select>
+    </form>
+
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>Статус</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${complaints}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.user.lastName + ' ' + c.user.firstName}"></td>
+            <td>
+                <a th:href="@{'/admin/complaints/' + ${c.id}}" th:text="${c.status}"></a>
+            </td>
+            <td th:text="${#temporals.format(c.createdDate, 'dd.MM.yyyy HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Комната [[${room.roomNumber}]]</title>
+    <link rel="stylesheet" th:href="@{/css/admin_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/admin/users}">Пользователи</a>
+        <a th:href="@{/admin/rooms}">Комнаты</a>
+        <a th:href="@{/admin/complaints}">Жалобы</a>
+        <a th:href="@{/home}">На главную</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1>Комната [[${room.roomNumber}]]</h1>
+    <p>Вместимость: <strong th:text="${room.capacity}"></strong></p>
+
+    <h2>Проживающие:</h2>
+    <ul>
+        <li th:each="user : ${room.residents}">
+            [[${user.firstName}]] [[${user.lastName}]] — [[${user.email}]]
+        </li>
+        <li th:if="${room.residents.isEmpty()}">Нет жильцов</li>
+    </ul>
+
+    <a th:href="@{/admin/rooms}">← Назад к списку</a>
+</main>
+</body>
+</html>

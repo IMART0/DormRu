@@ -13,7 +13,6 @@
     <a th:href="@{/admin/users}">Пользователи</a>
     <a th:href="@{/admin/rooms}">Комнаты</a>
     <a th:href="@{/admin/complaints}">Жалобы</a>
-    <a th:href="@{/admin/news/create}">Создать новость</a>
     <a th:href="@{/home}">На главную</a>
   </nav>
 </header>
@@ -33,7 +32,7 @@
   </div>
 
   <!-- Контент таблицы -->
-  <div id="userTableContent" th:replace="fragments/user-table :: userTableContent"></div>
+  <div id="userTableContent" th:replace="~{fragments/user-table :: userTableContent}"></div>
 </main>
 
 <!-- Скрипт размещаем перед закрывающим тегом body -->

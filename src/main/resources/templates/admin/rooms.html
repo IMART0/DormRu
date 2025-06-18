@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель | Комнаты</title>
+    <link rel="stylesheet" th:href="@{/css/admin_style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+    <nav class="nav-links">
+        <a th:href="@{/admin/users}">Пользователи</a>
+        <a th:href="@{/admin/rooms}">Комнаты</a>
+        <a th:href="@{/admin/complaints}">Жалобы</a>
+        <a th:href="@{/home}">На главную</a>
+    </nav>
+</header>
+
+<main class="content">
+    <h1>Комнаты</h1>
+
+    <form method="get" action="#" class="filter-form">
+        <label for="keyword"></label>
+        <input type="text" id="keyword" name="keyword" placeholder="Поиск по номеру" th:value="${keyword}">
+        <button type="submit">Найти</button>
+    </form>
+
+    <div class="room-table-container">
+        <table class="room-table">
+            <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Вместимость</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="room : ${rooms}" th:onclick="|window.location='@{/admin/rooms/{id}(id=${room.roomNumber})}'|" style="cursor:pointer;">
+                <td th:text="${room.roomNumber}"></td>
+                <td th:text="${room.capacity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

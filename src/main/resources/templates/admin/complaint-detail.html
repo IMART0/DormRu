@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Детали жалобы</title>
+  <link rel="stylesheet" th:href="@{/css/admin_style.css}">
+</head>
+<body>
+<header class="navbar">
+  <div class="logo"><a th:href="@{/home}" style="color:white;text-decoration:none;">Общежитие</a></div>
+</header>
+
+<main class="content">
+  <h1>Жалоба #<span th:text="${complaint.id}"></span></h1>
+
+  <div class="complaint-detail">
+    <p><strong>ФИО:</strong> <span th:text="${complaint.user.lastName + ' ' + complaint.user.firstName}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${complaint.user.email}"></span></p>
+    <p><strong>Дата:</strong> <span th:text="${#temporals.format(complaint.createdDate, 'dd.MM.yyyy HH:mm')}"></span></p>
+    <p><strong>Текст жалобы:</strong></p>
+    <p th:text="${complaint.complaintText}"></p>
+
+    <form method="post" th:action="@{'/admin/complaints/' + ${complaint.id} + '/update'}">
+      <label><strong>Статус:</strong></label>
+      <select name="status">
+        <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                th:selected="${s == complaint.status}"></option>
+      </select>
+      <button type="submit">Обновить статус</button>
+    </form>
+
+    <br>
+    <a th:href="@{/admin/complaints}">← Назад к списку</a>
+  </div>
+</main>
+</body>
+</html>
